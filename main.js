@@ -1,60 +1,110 @@
 
-let decision = null
+let decision = null;
+let historial = [];
+
+
+function validarNum(num) {
+    let numero = parseFloat(num);
+    return !isNaN(numero) ? numero : null;
+}
+
+
+function suma(a, b) {
+    return a + b;
+}
+
+
+function resta(a, b) {
+    return a - b;
+}
+
+
+function multiplicacion(a, b) {
+    return a * b;
+}
+
+
+function division(a, b) {
+    if (b === 0) {
+        alert("No se puede dividir entre cero!!");
+        return null;
+    }
+    return a / b;
+}
+
+
+function agregarAlHistorial(tipo, num1, num2, result) {
+    let operacion = {
+        tipo: tipo,
+        num1: num1,
+        num2: num2,
+        result: result
+    };
+    historial.push(operacion);
+}
+
 
 do {
     decision = parseInt(prompt("Que desea realizar a continuación: \n ---------------------------------- \n 1- Suma \n 2- Resta \n 3- Multiplición \n 4- División \n 0- Salir \n ---------------------------------- \n El historial de las operaciones realizadas queda en la consola al finalizar la calculadora (seleccionar '0')"));
     
+    let num1, num2, result;
+
     switch (decision) {
         case 1:
-            let suma1 = parseFloat(prompt("Primer número a sumar:"))
-            let suma2 = parseFloat(prompt("Segundo número a sumar:"))
-            if (!isNaN(suma1) && !isNaN(suma2)) {
-                console.log("El resultado de la suma es: " + (suma1+suma2));
-                alert("El resultado de la suma es: " + (suma1+suma2));
+            num1 = validarNum(prompt("Primer número a sumar:"));
+            num2 = validarNum(prompt("Segundo número a sumar:"));
+            if (num1 !== null && num2 !== null) {
+                result = suma(num1, num2);
+                alert("El resultado de la suma es: " + result);
+                agregarAlHistorial("Suma", num1, num2, result);
             } else {
-                alert("Uno de los valores no es válido!")
+                alert("Uno de los valores no es válido!");
             }
             break;
         case 2:
-            let resta1 = parseFloat(prompt("Primer número a restar:"))
-            let resta2 = parseFloat(prompt("Segundo número a restar:"))
-            if (!isNaN(resta1) && !isNaN(resta2)) {
-                console.log("El resultado de la resta es: " + (resta1-resta2));
-                alert("El resultado de la resta es: " + (resta1-resta2));
+            num1 = validarNum(prompt("Primer número a restar:"));
+            num2 = validarNum(prompt("Segundo número a restar:"));
+            if (num1 !== null && num2 !== null) {
+                result = resta(num1, num2);
+                alert("El resultado de la resta es: " + result);
+                agregarAlHistorial("Resta", num1, num2, result);
             } else {
-                alert("Uno de los valores no es válido!")
+                alert("Uno de los valores no es válido!");
             }
             break;
         case 3:
-            let mult1 = parseFloat(prompt("Primer número a multipicar:"))
-            let mult2 = parseFloat(prompt("Segundo número a multiplicar:"))
-            if (!isNaN(mult1) && !isNaN(mult2)) {
-                console.log("El resultado de la multiplicación es: " + (mult1*mult2));
-                alert("El resultado de la multiplicación es: " + (mult1*mult2));
+            num1 = validarNum(prompt("Primer número a multiplicar:"));
+            num2 = validarNum(prompt("Segundo número a multiplicar:"));
+            if (num1 !== null && num2 !== null) {
+                result = multiplicacion(num1, num2);
+                alert("El resultado de la multiplicación es: " + result);
+                agregarAlHistorial("Multiplicación", num1, num2, result);
             } else {
-                alert("Uno de los valores no es válido!")
+                alert("Uno de los valores no es válido!");
             }
             break;
         case 4:
-            let divi1 = parseFloat(prompt("Primer número a dividir:"))
-            let divi2 = parseFloat(prompt("Segundo número a dividir:"))
-            if (!isNaN(divi1) && !isNaN(divi2)) {
-                if (divi2 !== 0) {
-                    console.log("El resultado de la división es: " + (divi1/divi2));
-                    alert("El resultado de la división es: " + (divi1/divi2));
-                } else {
-                    alert("No se puede dividir entre cero!!");
+            num1 = validarNum(prompt("Primer número a dividir:"));
+            num2 = validarNum(prompt("Segundo número a dividir:"));
+            if (num1 !== null && num2 !== null) {
+                result = division(num1, num2);
+                if (result !== null) {
+                    alert("El resultado de la división es: " + result);
+                    agregarAlHistorial("División", num1, num2, result);
                 }
             } else {
-                alert("Uno de los valores no es válido!")
+                alert("Uno de los valores no es válido!");
             }
             break;
         case 0:
             alert("Hasta Luego!!");
+            console.log("Historial de operaciones:");
+            historial.forEach((operacion, index) => {
+                console.log(`OpN°${index + 1}- ${operacion.tipo} de ${operacion.num1} y ${operacion.num2} = ${operacion.result}`);
+            });
             break;
         default:
             alert("Seleccione una opción válida");
             break;
     }
-} while (decision !== 0)
-
+} while (decision !== 0);
